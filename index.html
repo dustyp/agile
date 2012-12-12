@@ -18,6 +18,9 @@
 		<!-- For syntax highlighting -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
 
+		<link rel="stylesheet" href="lib/css/alertify.core.css">		
+		<link rel="stylesheet" href="lib/css/alertify.default.css">		
+
 		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
 		<script>
 			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
@@ -39,17 +42,23 @@
 			}
 			.feedback{
 				display:inline;
+				cursor:pointer;
 			}
 		</style>
 
 <!-- start Mixpanel --><script type="text/javascript">(function(e,b){if(!b.__SV){var a,f,i,g;window.mixpanel=b;a=e.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"===e.location.protocol?"https:":"http:")+'//cdn.mxpnl.com/libs/mixpanel-2.2.min.js';f=e.getElementsByTagName("script")[0];f.parentNode.insertBefore(a,f);b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==
 typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.increment".split(" ");for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,e,d])};b.__SV=1.2}})(document,window.mixpanel||[]);
 mixpanel.init("c4d17d2828a58229824795be3c3951af");
+mixpanel.track("Opened");
+
+
+
+
 </script><!-- end Mixpanel -->		
 	</head>
 
 	<body>
-		<script>mixpanel.track("Opened");</script>
+
 		<div class="reveal">
 
 			<!-- Any section element inside of this container is displayed as a slide -->
@@ -231,6 +240,9 @@ public void testMainControllerModelTestFactoryTest() {
 					<p>Did you like the deck? Click one.</p>
 					<div class="feedback" id="like"><img src="two-thumbs-up.jpg" alt="Yes, great!" title="Yes, great!" height="240" width="auto"/></div>
 					<div class="feedback" id="not-like"><img src="fonzie_thumbs_down.jpg" alt="Booo, no!" title="Booo, No!" height="240" width="auto"/></div>
+					<div id="analytics-badge">
+						<a href="http://mixpanel.com/f/partner"><img src="http://mixpanel.com/site_media/images/partner/badge_blue.png" alt="Real Time Web Analytics" /></a>
+					</div>
 				</section>
 
 			</div>
@@ -240,6 +252,7 @@ public void testMainControllerModelTestFactoryTest() {
 		<script src="lib/js/head.min.js"></script>
 		<script src="js/reveal.min.js"></script>
 		<script src="lib/js/jquery-1.7.2.min.js"></script>
+		<script src="lib/js/alertify.min.js"></script>
 
 		<script>
 
@@ -278,10 +291,25 @@ public void testMainControllerModelTestFactoryTest() {
 			});
 			$("#like").bind('click', function(){
 				mixpanel.track('liked', {'duration': duration.toFixed(1)}); 
+				thankyou();
 			});
 			$("#not-like").bind('click', function(){
 				mixpanel.track('not-like', {'duration': duration.toFixed(1)}); 
+				sorry();
 			});
+
+			function thankyou(){
+				alertify.alert("Thanks for your feedback and glad you liked it!")
+				unbindall();
+			}
+			function sorry(){
+				alertify.alert("Sorry you didn't like it, but thanks for the feedback.");
+				unbindall();				
+			}
+			function unbindall(){
+				$(".feedback").css('cursor','default');
+				$(".feedback").unbind('click');
+			}
 		</script>
 
 	</body>
