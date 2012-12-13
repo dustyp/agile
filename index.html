@@ -20,7 +20,10 @@
 
 		<link rel="stylesheet" href="lib/css/alertify.core.css">		
 		<link rel="stylesheet" href="lib/css/alertify.default.css">		
-
+    <script type="text/javascript" charset="utf-8" src="qa-story_edgePreload.js"></script>
+    <style>
+        .edgeLoad-EDGE-162018100 { visibility:hidden; }
+    </style>
 		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
 		<script>
 			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
@@ -43,6 +46,14 @@
 			.feedback{
 				display:inline;
 				cursor:pointer;
+			}
+			.reveal section .anim-element{
+				display:inline;
+			}
+			.reveal section .anim-element img{
+				background:none;
+				border:0;
+				box-shadow: none;
 			}
 		</style>
 
@@ -73,6 +84,11 @@ mixpanel.track("Opened");
 					</p>
 
 					<span style="font-size:8pt;line-height:10px">* Title stolen from Alberto Savoia @ Google Test Automation Conference 2011 <br/> <a href="http://www.youtube.com/watch?v=X1jWe5rOu3g">http://www.youtube.com/watch?v=X1jWe5rOu3g</a></span>
+
+					<aside class="notes">
+						Thank you for inviting me.
+						Important topic.
+					</aside>
 				</section>
 <!--Quality-->
 				<section data-state="quality">
@@ -140,6 +156,17 @@ mixpanel.track("Opened");
 						</p>
 						<img src="lavernandshirley.jpg" />
 						</a>
+					</section>
+					<section data-state="qa-lifecycle">
+
+	<div id="Stage" class="EDGE-162018100">
+	</div>
+
+
+
+
+
+
 					</section>
 					<section data-state="move-upstream">
 						<h2>Moving upstream</h2>
@@ -289,6 +316,9 @@ public void testMainControllerModelTestFactoryTest() {
 			Reveal.addEventListener('end',function(){
 				duration = ((new Date).getTime() - start)/1000.0/60.0
 				mixpanel.track('complete', {'duration': duration.toFixed(1)}); 
+			});
+			Reveal.addEventListener('qa-lifecycle',function(){
+				AdobeEdge.getComposition("EDGE-162018100").getStage().play("start");
 			});
 			$("#like").bind('click', function(){
 				mixpanel.track('liked', {'duration': duration.toFixed(1)}); 
